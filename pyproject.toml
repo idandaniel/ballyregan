@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "ballyregan"
+version = "0.1.0"
+description = "Tool for fetching online proxies easily and efficiently."
+authors = ["idandaniel <idandaniel12@gmail.com>"]
+license = "MIT License"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.5.0"
+pydantic = "^1.10.2"
+loguru = "^0.6.0"
+requests = {extras = ["socks"], version = "^2.28.1"}
+Faker = "^15.1.1"
+lxml = "^4.9.1"
+bs4 = "^0.0.1"
+click = "^8.1.3"
+prettytable = "^3.4.1"
+typer = {extras = ["all"], version = "^0.6.1"}
+grequests = "^0.6.0"
+gevent = "^22.10.1"
+urllib3 = {extras = ["socks"], version = "^1.26.12"}
+pythonping = "^1.1.4"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
