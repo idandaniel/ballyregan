@@ -1,9 +1,14 @@
 [tool.poetry]
 name = "ballyregan"
-version = "0.1.0"
+version = "0.1.7"
 description = "Tool for fetching online proxies easily and efficiently."
 authors = ["idandaniel <idandaniel12@gmail.com>"]
 license = "Apache License, Version 2.0"
+
+packages = [
+    {include = "cli", from="src"},
+    {include = "ballyregan", from="src"},
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -25,7 +30,7 @@ pythonping = "^1.1.4"
 [tool.poetry.dev-dependencies]
 
 [tool.poetry.scripts]
-ballyregan = "src.cli.app:run"
+ballyregan = "cli.app:run"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
