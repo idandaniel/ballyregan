@@ -64,3 +64,7 @@ def callback(
         debug: bool = typer.Option(False, '--debug')
 ):
     fetcher.debug = debug
+
+
+def run() -> None:
+    app()
