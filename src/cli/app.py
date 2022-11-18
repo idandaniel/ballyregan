@@ -23,7 +23,7 @@ def get(
     ),
     anonymities: List[Anonymities] = typer.Option(
         [],
-        '--anonymyties', '-a',
+        '--anonymity', '-a',
         help='Search proxies only with the given anonymities.'
     ),
     limit: int = typer.Option(
