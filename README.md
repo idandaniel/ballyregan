@@ -24,7 +24,7 @@ pip install ballyregan
 
 ## Usage
 
-### Package :package:
+### Package 📦
 
 #### Create a fetcher instance
 ```python
@@ -58,7 +58,7 @@ proxies = fetcher.get(
 print(proxies)
 ```
 
-### CLI :computer:
+### CLI 💻
 
 #### Get all proxies
 ```sh
