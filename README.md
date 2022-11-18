@@ -10,12 +10,9 @@
 <br>
 
 ## How does it work?
-To maintain efficiency, ballyregan uses [greenlets](https://greenlet.readthedocs.io/en/latest). <br>
-The greenlets provide concurrency, and make it possible to validate thousands of proxies concurrently. <br>
-
-#### So, why Greenlets? 🟢 <br>
-Fetching a proxy is an [IO bound operation](https://en.wikipedia.org/wiki/I/O_bound) which depends on network. <br>
-Greenlets can only run on one single CPU and is useful for I/O-bound programs, which is exactly the use case. <br>
+Ballyregan uses [greenlets](https://greenlet.readthedocs.io/en/latest). <br>
+Fetching a proxy is an [IO bound operation](https://en.wikipedia.org/wiki/I/O_bound) which depends on network, <br>
+and greenlets provide concurrency, so by using them we are able validate thousands of proxies efficiently. <br>
 
 <br>
 
