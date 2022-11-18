@@ -107,5 +107,3 @@ Give a ⭐️ if this project helped you!
 Copyright © 2022 [Idan Daniel](https://github.com/idandaniel).<br />
 This project is [Apache License Version 2.0](https://www.apache.org/licenses/LICENSE-2.0) licensed.
 
----
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
