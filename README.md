@@ -7,6 +7,18 @@
 
 > Tool for fetching online proxies easily and efficiently.
 
+<br>
+
+## How does it work?
+To maintain efficiency, ballyregan uses [greenlets](https://greenlet.readthedocs.io/en/latest). <br>
+The greenlets provide concurrency, and make it possible to validate thousands of proxies concurrently. <br>
+
+#### So, why Greenlets? 🟢 <br>
+Fetching a proxy is an [IO bound operation](https://en.wikipedia.org/wiki/I/O_bound) which depends on network. <br>
+Greenlets can only run on one single CPU and is useful for I/O-bound programs, which is exactly the use case. <br>
+
+<br>
+
 ## Install
 
 ```sh
@@ -15,9 +27,73 @@ pip install ballyregan
 
 ## Usage
 
-```sh
-ballyregan get -l 5 -p HTTPS
+### Package :package:
+
+#### Create a fetcher instance
+```python
+from ballyregan import ProxyFetcher
+
+# Setting the debug mode to True, defaults to False
+fetcher = ProxyFetcher(debug=True)
 ```
+
+#### Get one proxy
+```python
+proxy = fetcher.get_one()
+print(proxy)
+```
+
+#### Get multiple proxies
+```python
+proxies = fetcher.get(limit=4)
+print(proxies)
+```
+
+#### Get proxies by filters
+```python
+from ballyregan.models import Protocols, Anonymities
+
+proxies = fetcher.get(
+  limit=4,
+  protocols=[Protocols.HTTPS, Protocols.SOCKS5],
+  anonymities=[Anonymities.ELITE]
+)
+print(proxies)
+```
+
+### CLI :computer:
+
+#### Get all proxies
+```sh
+ballyregan get --all
+```
+
+#### Get one proxy
+```sh
+ballyregan get --all
+```
+
+#### Use debug mode
+```sh
+ballyregan --debug get [OPTIONS]
+```
+
+#### Format output to json
+```sh
+ballyregan get -o json
+```
+
+#### Get proxies by limit
+```sh
+bellyregan get -l 4
+```
+
+#### Get proxies by filters
+```sh
+bellyregan get -l 4 -p https -p socks5 -a elite
+```
+
+---
 
 ## Author
 
@@ -34,5 +110,5 @@ Give a ⭐️ if this project helped you!
 Copyright © 2022 [Idan Daniel](https://github.com/idandaniel).<br />
 This project is [Apache License Version 2.0](https://www.apache.org/licenses/LICENSE-2.0) licensed.
 
-***
+---
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
