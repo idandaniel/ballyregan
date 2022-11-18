@@ -1,11 +1,11 @@
-<h1 align="center">Welcome to ballyregan 👋</h1>
+# Welcome to ballyregan 🔷
 <p>
   <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">
     <img alt="License: Apache License Version 2.0" src="https://img.shields.io/badge/License-Apache License Version 2.0-yellow.svg" />
   </a>
 </p>
 
-> Tool for fetching online proxies easily and efficiently.
+> Efficient python free online proxy fetcher.
 
 <br>
 
