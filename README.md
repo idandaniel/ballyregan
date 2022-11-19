@@ -1,15 +1,22 @@
-# Welcome to ballyregan 🔷
-<p>
-  <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">
-    <img alt="License: Apache License Version 2.0" src="https://img.shields.io/badge/License-Apache License Version 2.0-yellow.svg" />
-  </a>
-</p>
+[![PyPI version](https://badge.fury.io/py/ballyregan.svg)](https://badge.fury.io/py/ballyregan)
+[![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-yellow)](https://opensource.org/licenses/Apache-2.0)
 
-> Efficient python free online proxy fetcher.
+# Ballyregan 🔷
+## Find fetch & validate free proxies fast.
 
 <br>
 
 ## How does it work?
+Ballyregan fetches the proxies from  list of built in providers.
+> Provider - any website that serves free proxy lists (e.g https://free-proxy-list.net).
+
+You can write and append your own custom providers and pass it to the ProxyFetcher class as attribute. <br>
+> **Note** <br>
+> Every custom proxy provider must implement the [IProxyProvider](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/providers/interface.py) base interface.
+
+<br>
+
+## Behind the scenes
 Ballyregan uses [greenlets](https://greenlet.readthedocs.io/en/latest). <br>
 Fetching a proxy is an [IO bound operation](https://en.wikipedia.org/wiki/I/O_bound) which depends on network, <br>
 and greenlets provide concurrency, so by using them we are able validate thousands of proxies efficiently. <br>
