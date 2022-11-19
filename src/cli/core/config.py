@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-APP_NAME = 'proxy-fetcher'
+APP_NAME = 'ballyregan'
 
 
 class OutputFormats(str, Enum):
