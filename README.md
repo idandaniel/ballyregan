@@ -1,4 +1,5 @@
-[![PyPI version](https://badge.fury.io/py/ballyregan.svg)](https://badge.fury.io/py/ballyregan)
+[![Python](https://img.shields.io/pypi/pyversions/ballyregan.svg?style=plastic)](https://badge.fury.io/py/ballyregan)
+[![PyPI](https://badge.fury.io/py/ballyregan.svg)](https://badge.fury.io/py/ballyregan)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-yellow)](https://opensource.org/licenses/Apache-2.0)
 
 # Ballyregan 🔷
