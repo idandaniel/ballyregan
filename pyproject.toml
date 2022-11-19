@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ballyregan"
-version = "0.1.8"
+version = "0.1.9"
 description = "Tool for fetching online proxies easily and efficiently."
 authors = ["idandaniel <idandaniel12@gmail.com>"]
 license = "Apache License, Version 2.0"
