@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ballyregan"
-version = "0.1.9"
+version = "1.0.0"
 description = "Tool for fetching online proxies easily and efficiently."
 authors = ["idandaniel <idandaniel12@gmail.com>"]
 license = "Apache License, Version 2.0"
@@ -8,6 +8,19 @@ license = "Apache License, Version 2.0"
 packages = [
     {include = "cli", from="src"},
     {include = "ballyregan", from="src"},
+]
+
+keywords = [
+    "python",
+    "proxy",
+    "http-proxy",
+    "https-proxy",
+    "socks-proxy",
+    "proxy-list",
+    "proxy-checker",
+    "python-proxy",
+    "proxy-fetcher",
+    "get-proxy"
 ]
 
 [tool.poetry.dependencies]
@@ -31,6 +44,9 @@ pythonping = "^1.1.4"
 
 [tool.poetry.scripts]
 ballyregan = "cli.app:run"
+
+[tool.poetry]
+readme = "README.md"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
