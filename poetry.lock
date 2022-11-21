@@ -345,6 +345,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "style"
+version = "1.1.0"
+description = "🌈 Terminal string styling"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "typer"
 version = "0.6.1"
 description = "Typer, build great CLIs. Easy to code. Based on Python type hints."
@@ -371,6 +379,17 @@ description = "Backported and Experimental Type Hints for Python 3.7+"
 category = "main"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "update"
+version = "0.0.1"
+description = ""
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+style = "1.1.0"
 
 [[package]]
 name = "urllib3"
@@ -435,7 +454,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "73444c7762d2d46b2c6cdc3c685cb06c2ba113f7c71f4730f16c6f0dba2ec000"
+content-hash = "e6dd034923e165509b3ef7364d6e64a4e11a3ee68bc1c7e2ad91e79ee1358289"
 
 [metadata.files]
 beautifulsoup4 = []
@@ -474,8 +493,10 @@ rich = []
 shellingham = []
 six = []
 soupsieve = []
+style = []
 typer = []
 typing-extensions = []
+update = []
 urllib3 = []
 wcwidth = []
 win32-setctime = []
