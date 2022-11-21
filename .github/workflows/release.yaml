@@ -4,9 +4,12 @@ on:
   pull_request:
       branches:
         - 'main'
+      types:
+        - 'closed'
 
 jobs:
   publish:
+    if: github.event.pull_request.merged == true
     strategy:
       fail-fast: false
       matrix:
