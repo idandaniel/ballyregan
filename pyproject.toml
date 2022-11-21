@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "ballyregan"
-version = "1.0.0"
-description = "Tool for fetching online proxies easily and efficiently."
+version = "1.0.1"
+description = "Find fetch & validate free proxies fast."
 authors = ["idandaniel <idandaniel12@gmail.com>"]
 license = "Apache License, Version 2.0"
+readme = "README.md"
 
 packages = [
     {include = "cli", from="src"},
@@ -39,14 +40,12 @@ grequests = "^0.6.0"
 gevent = "^22.10.1"
 urllib3 = {extras = ["socks"], version = "^1.26.12"}
 pythonping = "^1.1.4"
+update = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
 
 [tool.poetry.scripts]
 ballyregan = "cli.app:run"
-
-[tool.poetry]
-readme = "README.md"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

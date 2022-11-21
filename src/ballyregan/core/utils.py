@@ -1,7 +1,4 @@
-import os
-import platform
-
-from typing import List
+from pythonping import ping
 
 from ballyregan import Proxy
 
@@ -29,6 +26,9 @@ def has_internet_connection() -> bool:
     Returns:
         bool: Connected or not
     """
-    os_type = platform.system()
-    null_device = "NUL" if os_type.lower() == "windows" else "/dev/null"
-    return os.system(f"ping 8.8.8.8 -n 2 -w 2 > {null_device}") == 0
+    try:
+        ping('google.com', verbose=False, timeout=2, count=2)
+    except:
+        return False
+    else:
+        return True
