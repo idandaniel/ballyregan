@@ -1,9 +1,9 @@
 from src.ballyregan.providers import GeonodeProvider
 from src.ballyregan.models import Proxy, Anonymities, Protocols
 
-from tests.ballyregan.providers.common import ProviderTest, ProviderTestCase
+from tests.ballyregan.providers.common import ProviderTestData, ProviderTestCase
 
-provider_test_case = ProviderTestCase(
+test_data = ProviderTestData(
     provider=GeonodeProvider(),
     expected_response={
         "data": [{
@@ -24,9 +24,9 @@ provider_test_case = ProviderTestCase(
 )
 
 
-class TestGeonodeProvider(ProviderTest):
+class TestGeonodeProvider(ProviderTestCase):
 
-    test_case: ProviderTestCase = provider_test_case
+    test_data: ProviderTestData = test_data
 
     def test_gather_with_bad_responses(self, requests_mock):
         bad_responses = [

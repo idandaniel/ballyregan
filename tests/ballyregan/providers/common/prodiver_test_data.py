@@ -6,7 +6,7 @@ from src.ballyregan.providers import IProxyProvider
 
 
 @dataclass
-class ProviderTestCase:
+class ProviderTestData:
     provider: IProxyProvider
     expected_response: Union[str, dict]
     expected_proxies: Proxy

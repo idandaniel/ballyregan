@@ -1,7 +1,7 @@
 from typing import List
 from dataclasses import dataclass
 
-from requests.exceptions import ConnectionError, JSONDecodeError
+from requests.exceptions import RequestException, JSONDecodeError
 
 from ballyregan import Proxy
 from ballyregan.models import Protocols
@@ -25,21 +25,21 @@ class GeonodeProvider(IProxyProvider):
                     'filterUpTime': 60
                 }
             )
-        except:
-            raise ProxyGatherException
 
-        if not proxies_response.ok:
-            raise ProxyGatherException
+            if not proxies_response.ok:
+                raise ProxyGatherException
 
-        try:
-            return proxies_response.json()['data']
-        except (JSONDecodeError, KeyError):
+            proxies_data = proxies_response.json()['data']
+
+        except (RequestException, KeyError, JSONDecodeError):
             raise ProxyGatherException
+        else:
+            return proxies_data
 
     @staticmethod
     def raw_proxy_to_object(raw_proxy: dict) -> Proxy:
         return Proxy(
-            protocol = raw_proxy['protocols'][0].lower(),
+            protocol=raw_proxy['protocols'][0].lower(),
             ip=raw_proxy['ip'],
             port=raw_proxy['port'],
             country=raw_proxy['country'],

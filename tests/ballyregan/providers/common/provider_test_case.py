@@ -1,14 +1,12 @@
 from typing import List
 
-from tests.ballyregan.providers.common import ProviderTestCase
+from unittest import TestCase
 
 
-class ProviderTest:
-
-    test_case: ProviderTestCase
+class ProviderTestCase(TestCase):
 
     def test_gather_with_bad_responses(self, bad_responses: List[dict], requests_mock):
-        provider = self.test_case.provider
+        provider = self.test_data.provider
 
         for bad_response in bad_responses:
             requests_mock.get(
@@ -21,7 +19,7 @@ class ProviderTest:
             assert gather_response == []
 
     def test_gather_with_bad_status_codes(self, requests_mock):
-        provider = self.test_case.provider
+        provider = self.test_data.provider
 
         fail_status_codes = [400, 500]
 
@@ -35,13 +33,13 @@ class ProviderTest:
             assert gather_response == []
 
     def test_gather_success(self, requests_mock):
-        provider = self.test_case.provider
+        provider = self.test_data.provider
 
         requests_mock.get(
             url=provider.url,
             status_code=200,
-            **{self.test_case.expected_response_type: self.test_case.expected_response}
+            **{self.test_data.expected_response_type: self.test_data.expected_response}
         )
 
         gather_response = provider.gather()
-        assert gather_response == self.test_case.expected_proxies
+        assert gather_response == self.test_data.expected_proxies
