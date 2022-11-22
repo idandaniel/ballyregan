@@ -2,6 +2,7 @@ from typing import List
 from dataclasses import dataclass
 
 import pandas
+from lxml.etree import Error
 from requests.exceptions import ConnectionError
 
 from ballyregan import Proxy
@@ -23,7 +24,7 @@ class FreeProxyListProvider(IProxyProvider):
                 raise ProxyGatherException
                 
             proxies_table = pandas.read_html(proxies_response.text)[0]
-        except (IndexError, ValueError, ConnectionError):
+        except (IndexError, ValueError, ConnectionError, Error):
             raise ProxyGatherException
         else:
             return proxies_table.to_dict(orient='records')

@@ -7,7 +7,7 @@ from gevent.exceptions import GreenletExit
 from loguru import logger
 from typing import List, Union
 
-monkey.patch_all(thread=False, select=False)
+monkey.patch_all(thread=False, select=False, ssl=False)
 import urllib3
 from urllib3.connectionpool import InsecureRequestWarning
 from urllib3 import PoolManager, ProxyManager

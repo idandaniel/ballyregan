@@ -6,7 +6,7 @@ from requests.exceptions import ConnectionError
 from ballyregan import Proxy
 from ballyregan.models import Protocols
 from ballyregan.providers import IProxyProvider
-from ballyregan.core.exceptions import ProxyGatherException
+from ballyregan.core.exceptions import ProxyGatherException, ProxyParseException
 
 
 @dataclass
@@ -33,7 +33,10 @@ class ProxyListDownloadProvider(IProxyProvider):
 
     @staticmethod
     def raw_proxy_to_object(raw_proxy: str) -> Proxy:
-        protocol, ip, port = raw_proxy.split(':')
+        try:
+            protocol, ip, port = raw_proxy.split(':')
+        except ValueError:
+            raise ProxyParseException
         return Proxy(
             ip=ip,
             port=port,

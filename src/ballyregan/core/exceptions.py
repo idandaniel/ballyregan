@@ -13,6 +13,12 @@ class ProxyGatherException(ProxyException):
     default_message: str = 'Failed to gather proxies.'
 
 
+class ProxyParseException(ProxyException):
+    """Raised when a proxy parse fails
+    """
+    default_message: str = 'Failed to parse raw proxy to Proxy model.'
+
+
 class NoProxiesFound(ProxyException):
     """Raised when the requested amount of proxies is greater than the actual valid proxies the manager found.
     """

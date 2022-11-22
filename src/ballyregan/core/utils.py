@@ -1,6 +1,7 @@
 from pythonping import ping
 
 from ballyregan import Proxy
+from ballyregan.models import Protocols
 
 
 def make_requests_proxies_dict_from_proxy(proxy: Proxy) -> dict:
@@ -12,10 +13,10 @@ def make_requests_proxies_dict_from_proxy(proxy: Proxy) -> dict:
     Returns:
         dict: the requests proxies dict
     """
-    if 'socks' in proxy.protocol:
+    if proxy.protocol in [Protocols.SOCKS4, Protocols.SOCKS5]:
         return {
-            'http': str(proxy),
-            'https': str(proxy)
+            Protocols.HTTP: str(proxy),
+            Protocols.HTTPS: str(proxy)
         }
     return {proxy.protocol: str(proxy)}
 
