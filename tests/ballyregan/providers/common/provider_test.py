@@ -1,15 +1,24 @@
-from abc import ABC, abstractmethod
+from typing import List
 
 from tests.ballyregan.providers.common import ProviderTestCase
 
 
-class IProviderTest(ABC):
+class ProviderTest:
 
     test_case: ProviderTestCase
 
-    @abstractmethod
-    def test_gather_with_bad_responses(self, requests_mock):
-        pass
+    def test_gather_with_bad_responses(self, bad_responses: List[dict], requests_mock):
+        provider = self.test_case.provider
+
+        for bad_response in bad_responses:
+            requests_mock.get(
+                url=provider.url,
+                status_code=200,
+                **bad_response
+            )
+
+            gather_response = provider.gather()
+            assert gather_response == []
 
     def test_gather_with_bad_status_codes(self, requests_mock):
         provider = self.test_case.provider
@@ -24,7 +33,6 @@ class IProviderTest(ABC):
 
             gather_response = provider.gather()
             assert gather_response == []
-
 
     def test_gather_success(self, requests_mock):
         provider = self.test_case.provider
