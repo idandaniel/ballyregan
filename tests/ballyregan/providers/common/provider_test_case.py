@@ -1,10 +1,12 @@
 from typing import List
 
-from unittest import TestCase
+from tests.ballyregan.providers.common import ProviderTestData
 
 
-class ProviderTestCase(TestCase):
+class ProviderTestCase:
 
+    test_data: ProviderTestData
+    
     def test_gather_with_bad_responses(self, bad_responses: List[dict], requests_mock):
         provider = self.test_data.provider
 

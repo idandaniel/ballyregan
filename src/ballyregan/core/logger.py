@@ -1,6 +1,8 @@
 import sys
 from loguru import logger
 
+from ballyregan.core.exceptions import InvalidDebugMode
+
 
 def set_logger_level(log_level: str):
     logger.remove()
@@ -12,4 +14,9 @@ def init_logger(debug: bool) -> None:
         True: 'DEBUG',
         False: 'INFO'
     }
-    set_logger_level(debug_levels_mapper[debug])
+
+    if debug not in debug_levels_mapper.keys():
+        raise InvalidDebugMode(f"Invalid debug mode {debug}")
+
+    log_level = debug_levels_mapper[debug]
+    set_logger_level(log_level)

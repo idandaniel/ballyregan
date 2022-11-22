@@ -50,7 +50,7 @@ test_data = ProviderTestData(
 
 
 class TestGeonodeProvider(ProviderTestCase):
-
+    
     test_data: ProviderTestData = test_data
 
     def test_gather_with_bad_responses(self, requests_mock):

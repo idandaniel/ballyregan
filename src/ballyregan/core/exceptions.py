@@ -27,3 +27,7 @@ class NoProxiesFound(ProxyException):
 
 class NoInternetConnection(Exception):
     pass
+
+
+class InvalidDebugMode(Exception):
+    pass

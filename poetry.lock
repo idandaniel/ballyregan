@@ -99,6 +99,17 @@ python-versions = "*"
 test = ["hypothesis (==3.55.3)", "flake8 (==3.7.8)"]
 
 [[package]]
+name = "coverage"
+version = "6.5.0"
+description = "Code coverage measurement for Python"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+toml = ["tomli"]
+
+[[package]]
 name = "exceptiongroup"
 version = "1.0.4"
 description = "Backport of PEP 654 (exception groups)"
@@ -591,7 +602,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "8a0da02f56773b001f87fdd75359f020bdb07649e9a9fabb08250026fb9fd226"
+content-hash = "197bdc79edd45a7ce4a39cf8e556280b4cad2e6a79aabd65595dee7544eccfad"
 
 [metadata.files]
 attrs = []
@@ -609,6 +620,7 @@ colorama = [
     {file = "colorama-0.4.5.tar.gz", hash = "sha256:e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"},
 ]
 commonmark = []
+coverage = []
 exceptiongroup = []
 faker = []
 gevent = []
