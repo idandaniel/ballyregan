@@ -1,10 +1,9 @@
 from typing import List
 from dataclasses import dataclass
 
-from requests.exceptions import RequestException, JSONDecodeError
+from requests.exceptions import ConnectionError, JSONDecodeError
 
 from ballyregan import Proxy
-from ballyregan.models import Protocols
 from ballyregan.providers import IProxyProvider
 from ballyregan.core.exceptions import ProxyGatherException
 
@@ -31,7 +30,7 @@ class GeonodeProvider(IProxyProvider):
 
             proxies_data = proxies_response.json()['data']
 
-        except (RequestException, KeyError, JSONDecodeError):
+        except (ConnectionError, KeyError, JSONDecodeError):
             raise ProxyGatherException
         else:
             return proxies_data

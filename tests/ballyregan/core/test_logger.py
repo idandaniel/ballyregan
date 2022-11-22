@@ -37,7 +37,7 @@ class CaptureLoguru:
 
 class TestLogger:
 
-    def test_set_logger_level(self):
+    def test_set_logger_level_info(self):
         set_logger_level("INFO")
 
         info_message = "This is an info message"
@@ -52,7 +52,7 @@ class TestLogger:
         assert info_regex.match(
             caplog.out) is not None and not debug_regex.match(caplog.out)
 
-    def test_log_level_debug(self):
+    def test_logger_level_debug(self):
         set_logger_level("DEBUG")
 
         message = "This is a debug message"
@@ -65,3 +65,9 @@ class TestLogger:
     def test_init_logger(self):
         with pytest.raises(Exception, match="Invalid debug mode.*") as e:
             init_logger(debug="Unknown Option")
+
+        init_logger(debug=False)
+        self.test_logger_level_debug()
+
+        init_logger(debug=True)
+        self.test_set_logger_level_info()

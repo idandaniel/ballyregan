@@ -31,8 +31,8 @@ class ProxyManagerFactory:
         }
         try:
             pool_manager_creator = _protocols_to_pool_manager_creators[proxy.protocol]
-        except KeyError:
-            raise Exception(f'Protocol {proxy.protocol} has no pool creator')
+        except AttributeError:
+            raise Exception(f'{proxy} is not a valid proxy')
         return pool_manager_creator(proxy)
 
     def _create_http_manager(self, proxy: Proxy) -> PoolManager:
@@ -59,7 +59,7 @@ class ProxyManagerFactory:
 
 
 class ProxyValidator:
-    """The ProxyValidator is responsible for validating proxies in ThreadPoolExecutor for efficiency.
+    """The ProxyValidator is responsible for validating proxies in greenlets for concurrency.
     """
 
     urllib3.disable_warnings(InsecureRequestWarning)

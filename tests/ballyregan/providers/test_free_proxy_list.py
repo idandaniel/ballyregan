@@ -1,6 +1,5 @@
 from src.ballyregan.providers import FreeProxyListProvider
 from src.ballyregan.models import Proxy, Anonymities, Protocols
-
 from tests.ballyregan.providers.common import ProviderTestData, ProviderTestCase
 
 
@@ -50,7 +49,7 @@ test_data = ProviderTestData(
 
 
 class TestGeonodeProvider(ProviderTestCase):
-    
+
     test_data: ProviderTestData = test_data
 
     def test_gather_with_bad_responses(self, requests_mock):
