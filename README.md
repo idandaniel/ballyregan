@@ -8,6 +8,14 @@
 
 <br>
 
+With ballyregan, getting a free proxy won't be a problem anymore!
+You can use ballyregan to
+  - <b>Fetch</b> free tested proxies super fast (with [ProxyFetcher](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/fetcher.py))
+  - <b>Validate</b> your own proxies (with [ProxyValidator](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/validator.py))
+  - <b>Filter</b> custom proxy list by protocol & anonymity (with [ProxyFilterer](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/filterer.py))
+
+<br>
+
 ## How does it work?
 Ballyregan fetches the proxies from  list of built in providers.
 > Provider - any website that serves free proxy lists (e.g https://free-proxy-list.net).
@@ -76,7 +84,7 @@ ballyregan get --all
 
 #### Get one proxy
 ```sh
-ballyregan get --all
+ballyregan get
 ```
 
 #### Use debug mode
