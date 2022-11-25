@@ -1,6 +1,7 @@
 from __future__ import annotations
-from typing import Any, List
 from itertools import chain
+from typing import Any, List
+from asyncio import AbstractEventLoop
 from dataclasses import dataclass, field
 from concurrent.futures import ThreadPoolExecutor
 
@@ -10,15 +11,15 @@ from ballyregan import Proxy
 from ballyregan.models import Protocols, Anonymities
 from ballyregan.core.exceptions import NoProxiesFound, NoInternetConnection
 from ballyregan.core.logger import init_logger
-from ballyregan.core.utils import has_internet_connection
+from ballyregan.core.utils import has_internet_connection, get_event_loop
 from ballyregan.validator import ProxyValidator
 from ballyregan.filterer import ProxyFilterer
 from ballyregan.providers import IProxyProvider, FreeProxyListProvider, GeonodeProvider, SSLProxiesProvider, USProxyProvider, ProxyListDownloadProvider
 
 
-
 @dataclass
 class ProxyFetcher:
+    loop: AbstractEventLoop = None
     debug: bool = False
     _proxy_providers: List[IProxyProvider] = field(
         default_factory=lambda: [
@@ -29,18 +30,26 @@ class ProxyFetcher:
             ProxyListDownloadProvider(),
         ]
     )
-    _proxy_validator: ProxyValidator = ProxyValidator()
     _proxy_filterer: ProxyFilterer = ProxyFilterer()
 
     def __post_init__(self) -> None:
         if not has_internet_connection():
             raise NoInternetConnection
 
+        self._proxy_validator = self.__new_validator()
+
     def __setattr__(self, __name: str, __value: Any) -> None:
         if __name == 'debug':
             init_logger(__value)
-            
+
         super().__setattr__(__name, __value)
+
+    def __new_validator(self) -> ProxyValidator:
+        if self.loop:
+            return ProxyValidator(loop=self.loop)
+
+        self.loop = get_event_loop()
+        return ProxyValidator(loop=self.loop)
 
     def _get_all_proxies_from_providers(self) -> None:
         """Iterates through all the providers, gather proxies and returns them.
@@ -78,7 +87,7 @@ class ProxyFetcher:
         logger.debug(
             f'Finished proxies gather, {len(valid_proxies)} proxies were found.'
         )
-        
+
         if not valid_proxies:
             raise NoProxiesFound
 
