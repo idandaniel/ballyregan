@@ -41,6 +41,11 @@ gevent = "^22.10.1"
 urllib3 = {extras = ["socks"], version = "^1.26.12"}
 pythonping = "^1.1.4"
 update = "^0.0.1"
+aiohttp = "^3.8.3"
+aiohttp-proxy = "^0.1.2"
+coverage = "^6.5.0"
+html5lib = "^1.1"
+pytest = "^7.2.0"
 
 [tool.poetry.dev-dependencies]
 

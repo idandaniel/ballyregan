@@ -1,23 +1,6 @@
+import asyncio
+
 from pythonping import ping
-
-from ballyregan import Proxy
-
-
-def make_requests_proxies_dict_from_proxy(proxy: Proxy) -> dict:
-    """takes a proxy model and returns a dict that requests package is able to use as 'proxies' is request
-
-    Args:
-        proxy (Proxy): Proxy model
-
-    Returns:
-        dict: the requests proxies dict
-    """
-    if 'socks' in proxy.protocol:
-        return {
-            'http': str(proxy),
-            'https': str(proxy)
-        }
-    return {proxy.protocol: str(proxy)}
 
 
 def has_internet_connection() -> bool:
@@ -32,3 +15,10 @@ def has_internet_connection() -> bool:
         return False
     else:
         return True
+
+
+def get_event_loop():
+    try:
+        return asyncio.get_running_loop() 
+    except Exception:
+        return asyncio.get_event_loop_policy().get_event_loop()
