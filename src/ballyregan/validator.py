@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 import aiohttp
 from aiohttp.client import ClientTimeout
-from aiohttp_proxy import ProxyConnector as HTTPConnector
+from aiohttp_proxy import ProxyConnector
 
 from loguru import logger
 import urllib3
@@ -31,7 +31,7 @@ class ProxyValidator:
         
         async with aiohttp.ClientSession(
             timeout=self._default_timeout,
-            connector=HTTPConnector.from_url(str(proxy))
+            connector=ProxyConnector.from_url(str(proxy))
         ) as session:
             try:
                 async with session.get(f"{judge_protocol}://{self._judge_domain}", ssl=False) as response:
