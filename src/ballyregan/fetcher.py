@@ -30,7 +30,6 @@ class ProxyFetcher:
             ProxyListDownloadProvider(),
         ]
     )
-    # _proxy_validator: ProxyValidator = ProxyValidator()
     _proxy_filterer: ProxyFilterer = ProxyFilterer()
 
     def __post_init__(self) -> None:
