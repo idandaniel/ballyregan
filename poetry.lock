@@ -150,28 +150,6 @@ python-versions = "*"
 test = ["hypothesis (==3.55.3)", "flake8 (==3.7.8)"]
 
 [[package]]
-name = "coverage"
-version = "6.5.0"
-description = "Code coverage measurement for Python"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[package.extras]
-toml = ["tomli"]
-
-[[package]]
-name = "exceptiongroup"
-version = "1.0.4"
-description = "Backport of PEP 654 (exception groups)"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[package.extras]
-test = ["pytest (>=6)"]
-
-[[package]]
 name = "faker"
 version = "15.1.1"
 description = "Faker is a Python package that generates fake data for you."
@@ -261,14 +239,6 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
-name = "iniconfig"
-version = "1.1.1"
-description = "iniconfig: brain-dead simple config-ini parsing"
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "loguru"
 version = "0.6.0"
 description = "Python logging made (stupidly) simple"
@@ -314,17 +284,6 @@ optional = false
 python-versions = ">=3.8"
 
 [[package]]
-name = "packaging"
-version = "21.3"
-description = "Core utilities for Python packages"
-category = "main"
-optional = false
-python-versions = ">=3.6"
-
-[package.dependencies]
-pyparsing = ">=2.0.2,<3.0.5 || >3.0.5"
-
-[[package]]
 name = "pandas"
 version = "1.5.0"
 description = "Powerful data structures for data analysis, time series, and statistics"
@@ -342,18 +301,6 @@ pytz = ">=2020.1"
 
 [package.extras]
 test = ["pytest-xdist (>=1.31)", "pytest (>=6.0)", "hypothesis (>=5.5.3)"]
-
-[[package]]
-name = "pluggy"
-version = "1.0.0"
-description = "plugin and hook calling mechanisms for python"
-category = "main"
-optional = false
-python-versions = ">=3.6"
-
-[package.extras]
-dev = ["pre-commit", "tox"]
-testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "prettytable"
@@ -404,43 +351,12 @@ python-versions = ">=3.6"
 plugins = ["importlib-metadata"]
 
 [[package]]
-name = "pyparsing"
-version = "3.0.9"
-description = "pyparsing module - Classes and methods to define and execute parsing grammars"
-category = "main"
-optional = false
-python-versions = ">=3.6.8"
-
-[package.extras]
-diagrams = ["railroad-diagrams", "jinja2"]
-
-[[package]]
 name = "pysocks"
 version = "1.7.1"
 description = "A Python SOCKS client module. See https://github.com/Anorov/PySocks for more information."
 category = "main"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-
-[[package]]
-name = "pytest"
-version = "7.2.0"
-description = "pytest: simple powerful testing with Python"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-
-[package.dependencies]
-attrs = ">=19.2.0"
-colorama = {version = "*", markers = "sys_platform == \"win32\""}
-exceptiongroup = {version = ">=1.0.0rc8", markers = "python_version < \"3.11\""}
-iniconfig = "*"
-packaging = "*"
-pluggy = ">=0.12,<2.0"
-tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
-
-[package.extras]
-testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
 [[package]]
 name = "python-dateutil"
@@ -534,14 +450,6 @@ description = "🌈 Terminal string styling"
 category = "main"
 optional = false
 python-versions = "*"
-
-[[package]]
-name = "tomli"
-version = "2.0.1"
-description = "A lil' TOML parser"
-category = "main"
-optional = false
-python-versions = ">=3.7"
 
 [[package]]
 name = "typer"
@@ -665,7 +573,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "5c19f4bcf4856efa3d64f6bda4cf3c4d926a1620eedff9e2eec5a2f0647ec758"
+content-hash = "6ca788b6b74c0be487ffe2e43a4d42b0a10e59745204b22968342cab7d28e993"
 
 [metadata.files]
 aiohttp = []
@@ -687,8 +595,6 @@ colorama = [
     {file = "colorama-0.4.5.tar.gz", hash = "sha256:e6c6b4334fc50988a639d9b98aa429a0b57da6e17b9a44f0451f930b6967b7a4"},
 ]
 commonmark = []
-coverage = []
-exceptiongroup = []
 faker = []
 frozenlist = []
 gevent = []
@@ -696,21 +602,16 @@ greenlet = []
 grequests = []
 html5lib = []
 idna = []
-iniconfig = []
 loguru = []
 lxml = []
 multidict = []
 numpy = []
-packaging = []
 pandas = []
-pluggy = []
 prettytable = []
 pycparser = []
 pydantic = []
 pygments = []
-pyparsing = []
 pysocks = []
-pytest = []
 python-dateutil = []
 pythonping = []
 pytz = []
@@ -720,7 +621,6 @@ shellingham = []
 six = []
 soupsieve = []
 style = []
-tomli = []
 typer = []
 typing-extensions = []
 update = []
