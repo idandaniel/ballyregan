@@ -46,9 +46,11 @@ When you use the ProxyFetcher to fetch a proxy, it performs several steps:
 <br>
 
 ## Behind the scenes
-Ballyregan uses [greenlets](https://greenlet.readthedocs.io/en/latest). <br>
-Fetching a proxy is an [IO bound operation](https://en.wikipedia.org/wiki/I/O_bound) which depends on network, <br>
-and greenlets provide concurrency, so by using them we are able validate thousands of proxies efficiently. <br>
+Fetching a proxy is an [IO bound operation](https://en.wikipedia.org/wiki/I/O_bound) which depends on network. A common approach for this problem is performing your network requests async. <br>
+After digging a bit, testing Threads, Greenlets and async operations, we decided to go the async way. <br>
+To perform async http requests, ballyregan uses [aiohttp](https://docs.aiohttp.org/en/stable/) and [asyncio](https://docs.python.org/3/library/asyncio.html),
+as <em>"asyncio is often a perfect fit for IO-bound and high-level structured network code."</em> (from asyncio docs). <br>
+By using the power of async http requests, ballyregan is able to validate thousands of proxies really fast. <br>
 
 ---
 
