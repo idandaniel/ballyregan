@@ -1,27 +1,46 @@
-[![Python](https://img.shields.io/pypi/pyversions/ballyregan.svg)](https://badge.fury.io/py/ballyregan)
-[![PyPI](https://badge.fury.io/py/ballyregan.svg?kill_cache=1)](https://badge.fury.io/py/ballyregan)
-[![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-yellow)](https://opensource.org/licenses/Apache-2.0)
+<h1>Ballyregan 🔷</h1>
+<p><em>Find fetch & validate free proxies fast.</em></p>
 
+<p>
+  <a href="https://pypi.org/project/ballyregan" target="_blank">
+      <img src="https://img.shields.io/pypi/v/ballyregan?label=pypi%20package" alt="Package version">
+  </a>
+  <a href="https://pypi.org/project/ballyregan" target="_blank">
+      <img src="https://img.shields.io/pypi/pyversions/ballyregan.svg?color=%2334D058" alt="Supported Python versions">
+  </a>
+  <a href="https://pypi.org/project/ballyregan" target="_blank">
+      <img src="https://img.shields.io/badge/license-Apache%202.0-yellow" alt="License: Apache 2.0">
+  </a>
+</p>
 
-# Ballyregan 🔷
-## Find fetch & validate free proxies fast.
+---
 
 <br>
 
-With ballyregan, getting a free proxy won't be a problem anymore!
-You can use ballyregan to
-  - <b>Fetch</b> free tested proxies super fast (with [ProxyFetcher](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/fetcher.py))
-  - <b>Validate</b> your own proxies (with [ProxyValidator](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/validator.py))
-  - <b>Filter</b> custom proxy list by protocol & anonymity (with [ProxyFilterer](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/filterer.py))
+Ballyregan is a package & CLI that allows you to fetch free tested proxies really fast!
+
+Key features:
+  * **Fetch** free tested proxies super fast with [ProxyFetcher](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/fetcher.py)
+  * **Validate** your own proxies with [ProxyValidator](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/validator.py)
+  * **Filter** custom proxy list by protocol & anonymity with [ProxyFilterer](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/filterer.py)
 
 <br>
+
+---
 
 ## How does it work?
-Ballyregan fetches the proxies from  list of built in providers.
-> Provider - any website that serves free proxy lists (e.g https://free-proxy-list.net).
+When you use the ProxyFetcher to fetch a proxy, it performs several steps:
+1. Gather all the available proxies from a list of built in providers (each provider gathers it's own and returns it to the fetcher).
 
-You can write and append your own custom providers and pass it to the ProxyFetcher class as attribute. <br>
+  - > Provider - any website that serves free proxy lists (e.g https://free-proxy-list.net).
+
+2. Filter all the gathered proxies by the given protocols and anonymities (if exist).
+3. Validate the filtered proxies and return them.
+
+<br>
+
 > **Note** <br>
+> You can write and append your own custom providers and pass it to the ProxyFetcher class as attribute. <br>
 > Every custom proxy provider must implement the [IProxyProvider](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/providers/interface.py) base interface.
 
 <br>
@@ -31,7 +50,7 @@ Ballyregan uses [greenlets](https://greenlet.readthedocs.io/en/latest). <br>
 Fetching a proxy is an [IO bound operation](https://en.wikipedia.org/wiki/I/O_bound) which depends on network, <br>
 and greenlets provide concurrency, so by using them we are able validate thousands of proxies efficiently. <br>
 
-<br>
+---
 
 ## Install
 
