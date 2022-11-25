@@ -14,6 +14,7 @@ from urllib3.connectionpool import InsecureRequestWarning
 
 from ballyregan import Proxy
 from ballyregan.models import Protocols
+from ballyregan.core.utils import get_event_loop
 
 
 @dataclass
@@ -21,10 +22,16 @@ class ProxyValidator:
 
     urllib3.disable_warnings(InsecureRequestWarning)
 
-    loop: AbstractEventLoop
+    loop: AbstractEventLoop = None
     _judge_domain: str = 'httpheader.net/azenv.php'
     _default_timeout: ClientTimeout = ClientTimeout(total=30)
 
+
+    def __post_init__(self) -> None:
+        if not self.loop:
+            self.loop = get_event_loop()
+
+    
     async def _aiohttp_validation(self, proxy: Proxy) -> bool:
 
         judge_protocol = Protocols.HTTPS if proxy.protocol==Protocols.HTTPS else Protocols.HTTP
