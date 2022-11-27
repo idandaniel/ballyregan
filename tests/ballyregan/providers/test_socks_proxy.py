@@ -63,16 +63,26 @@ class TestSocksProxyProvider(ProviderTestCase):
                     <table>
                         <thead>
                             <tr>
-                                <th>I</th>
-                                <th>P</th>
-                                <th>C</th>
+                                <th>IP Address</th>
+                                <th>Port</th>
+                                <th>Code</th>
+                                <th class="hm">Country</th>
+                                <th>Anonymity</th>
+                                <th class="hm">Google</th>
+                                <th class="hx">Https</th>
+                                <th class="hm">Last Checked</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <th>I</th>
-                                <th>I</th>
-                                <th>I</th>
+                                <td>1.1.1.1</td>
+                                <td>8080</td>
+                                <td>IL</td>
+                                <td class="hm">Israel</td>
+                                <td>elite proxy</td>
+                                <td class="hm">no</td>
+                                <td class="hx">yes</td>
+                                <td class="hm">16 secs ago</td>
                             </tr>
                         </tbody>
                     </table>

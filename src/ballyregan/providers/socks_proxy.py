@@ -17,4 +17,5 @@ class SocksProxyProvider(FreeProxyListProvider):
             proxy.protocol = raw_proxy['Version'].lower()
         except KeyError:
             raise ProxyParseException
-        return proxy
+        else:
+            return proxy
