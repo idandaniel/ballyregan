@@ -26,16 +26,14 @@ class ProxyValidator:
     _judge_domain: str = 'httpheader.net/azenv.php'
     _default_timeout: ClientTimeout = ClientTimeout(total=30)
 
-
     def __post_init__(self) -> None:
         if not self.loop:
             self.loop = get_event_loop()
 
-    
     async def _aiohttp_validation(self, proxy: Proxy) -> bool:
 
-        judge_protocol = Protocols.HTTPS if proxy.protocol==Protocols.HTTPS else Protocols.HTTP
-        
+        judge_protocol = Protocols.HTTPS if proxy.protocol == Protocols.HTTPS else Protocols.HTTP
+
         async with aiohttp.ClientSession(
             timeout=self._default_timeout,
             connector=ProxyConnector.from_url(str(proxy))
@@ -43,7 +41,7 @@ class ProxyValidator:
             try:
                 async with session.get(f"{judge_protocol}://{self._judge_domain}", ssl=False) as response:
                     return response.ok
-            except Exception:
+            except:
                 return False
 
     async def is_proxy_valid(self, proxy: Proxy) -> bool:
@@ -70,9 +68,27 @@ class ProxyValidator:
             )
             return is_proxy_valid
 
+    def _create_validation_coroutines(self, valid_proxies_queue: Queue, proxies: List[Proxy], limit: int = 0):
+
+        async def put_proxy_in_queue_if_valid(proxy: Proxy):
+            nonlocal valid_proxies_queue
+
+            if valid_proxies_queue.qsize() >= limit and limit != 0:
+                raise Full
+
+            is_proxy_valid = await self.is_proxy_valid(proxy)
+            if not is_proxy_valid:
+                return
+
+            valid_proxies_queue.put_nowait(proxy)
+
+        return [
+            put_proxy_in_queue_if_valid(proxy)
+            for proxy in proxies
+        ]
+
     def filter_valid_proxies(self, proxies: List[Proxy], limit: int = 0) -> List[Proxy]:
         """Gets a list of proxies, filters them and returns only the valid ones.
-        The filter uses Greenlets to make the process more efficient.
 
         Args:
             proxies (List[Proxy]): Proxy list to filter
@@ -86,22 +102,12 @@ class ProxyValidator:
 
         valid_proxies = Queue(maxsize=limit)
 
-        async def put_proxy_in_queue_if_valid(proxy: Proxy):
-            nonlocal valid_proxies
-
-            if valid_proxies.qsize() >= limit and limit != 0:
-                raise Full
-
-            is_proxy_valid = await self.is_proxy_valid(proxy)
-            if not is_proxy_valid:
-                return
-
-            valid_proxies.put_nowait(proxy)
-
-        futures = asyncio.gather(*[
-            put_proxy_in_queue_if_valid(proxy)
-            for proxy in proxies
-        ])
+        coroutines = self._create_validation_coroutines(
+            valid_proxies_queue=valid_proxies,
+            proxies=proxies,
+            limit=limit
+        )
+        futures = asyncio.gather(*coroutines)
         try:
             self.loop.run_until_complete(futures)
         except Full:
