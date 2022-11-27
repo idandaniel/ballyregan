@@ -14,7 +14,7 @@ from ballyregan.core.logger import init_logger
 from ballyregan.core.utils import has_internet_connection, get_event_loop
 from ballyregan.validator import ProxyValidator
 from ballyregan.filterer import ProxyFilterer
-from ballyregan.providers import IProxyProvider, FreeProxyListProvider, GeonodeProvider, SSLProxiesProvider, USProxyProvider, ProxyListDownloadProvider
+from ballyregan.providers import IProxyProvider, FreeProxyListProvider, GeonodeProvider, SSLProxiesProvider, USProxyProvider, ProxyListDownloadProvider, SocksProxyProvider
 
 
 @dataclass
@@ -28,6 +28,7 @@ class ProxyFetcher:
             GeonodeProvider(),
             USProxyProvider(),
             ProxyListDownloadProvider(),
+            SocksProxyProvider(),
         ]
     )
     _proxy_filterer: ProxyFilterer = ProxyFilterer()
