@@ -1,4 +1,4 @@
-from src.ballyregan.providers import FreeProxyListProvider
+from src.ballyregan.providers import SocksProxyProvider
 from src.ballyregan.models import Proxy, Anonymities, Protocols
 from tests.ballyregan.providers.common import ProviderTestData, ProviderTestCase
 
@@ -13,6 +13,7 @@ html_response = """<html>
                     <th>Port</th>
                     <th>Code</th>
                     <th class="hm">Country</th>
+                    <th>Version</th>
                     <th>Anonymity</th>
                     <th class="hm">Google</th>
                     <th class="hx">Https</th>
@@ -25,6 +26,7 @@ html_response = """<html>
                     <td>8080</td>
                     <td>IL</td>
                     <td class="hm">Israel</td>
+                    <td class="hm">Socks4</td>
                     <td>elite proxy</td>
                     <td class="hm">no</td>
                     <td class="hx">yes</td>
@@ -36,10 +38,10 @@ html_response = """<html>
 </html>"""
 
 test_data = ProviderTestData(
-    provider=FreeProxyListProvider(),
+    provider=SocksProxyProvider(),
     expected_response=html_response,
     expected_proxies=[Proxy(
-        protocol=Protocols.HTTPS,
+        protocol=Protocols.SOCKS4,
         ip="1.1.1.1",
         port=8080,
         anonymity=Anonymities.ELITE,
@@ -48,7 +50,7 @@ test_data = ProviderTestData(
 )
 
 
-class TestFreeProxyListProvider(ProviderTestCase):
+class TestSocksProxyProvider(ProviderTestCase):
 
     test_data: ProviderTestData = test_data
 

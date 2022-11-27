@@ -1,8 +1,6 @@
 from typing import List
 
 import pytest
-# from pytest_socket import SocketBlockedError
-import socket
 
 from tests.ballyregan.providers.common import ProviderTestData
 
@@ -48,4 +46,5 @@ class ProviderTestCase:
         )
 
         gather_response = provider.gather()
+        print(gather_response)
         assert gather_response == self.test_data.expected_proxies

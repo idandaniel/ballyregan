@@ -1,4 +1,4 @@
-from src.ballyregan.providers import FreeProxyListProvider
+from src.ballyregan.providers import SSLProxiesProvider
 from src.ballyregan.models import Proxy, Anonymities, Protocols
 from tests.ballyregan.providers.common import ProviderTestData, ProviderTestCase
 
@@ -36,7 +36,7 @@ html_response = """<html>
 </html>"""
 
 test_data = ProviderTestData(
-    provider=FreeProxyListProvider(),
+    provider=SSLProxiesProvider(),
     expected_response=html_response,
     expected_proxies=[Proxy(
         protocol=Protocols.HTTPS,
@@ -48,7 +48,7 @@ test_data = ProviderTestData(
 )
 
 
-class TestFreeProxyListProvider(ProviderTestCase):
+class TestSSLProxiesProvider(ProviderTestCase):
 
     test_data: ProviderTestData = test_data
 

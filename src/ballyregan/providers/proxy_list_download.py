@@ -22,7 +22,7 @@ class ProxyListDownloadProvider(IProxyProvider):
                 response = self._session.get(f'{self.url}', params={'type': protocol})
                 if not response.ok:
                     raise ProxyGatherException
-            except ConnectionError:
+            except Exception:
                 raise ProxyGatherException
             else:
                 proxies_result = response.text.splitlines()
