@@ -4,3 +4,4 @@ from .geonode import GeonodeProvider
 from .ssl_proxies import SSLProxiesProvider
 from .us_proxy import USProxyProvider
 from .proxy_list_download import ProxyListDownloadProvider
+from .socks_proxy import SocksProxyProvider
