@@ -2,7 +2,7 @@ import socket
 
 
 
-def run_offline(func):
+def disable_socket(func):
     original_socket = socket.socket
 
     def socket_disabled_before(*args, **kwargs):

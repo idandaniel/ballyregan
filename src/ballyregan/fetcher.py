@@ -1,6 +1,6 @@
 from __future__ import annotations
 from itertools import chain
-from typing import Any, List
+from typing import Any, List, Optional
 from asyncio import AbstractEventLoop
 from dataclasses import dataclass, field
 from concurrent.futures import ThreadPoolExecutor
@@ -19,8 +19,8 @@ from ballyregan.providers import IProxyProvider, FreeProxyListProvider, GeonodeP
 
 @dataclass
 class ProxyFetcher:
-    loop: AbstractEventLoop = None
-    debug: bool = False
+    _proxy_validator: ProxyValidator = None
+    _proxy_filterer: ProxyFilterer = None
     _proxy_providers: List[IProxyProvider] = field(
         default_factory=lambda: [
             SSLProxiesProvider(),
@@ -31,13 +31,18 @@ class ProxyFetcher:
             SocksProxyProvider(),
         ]
     )
-    _proxy_filterer: ProxyFilterer = ProxyFilterer()
+    loop: AbstractEventLoop = None
+    debug: bool = False
 
     def __post_init__(self) -> None:
         if not has_internet_connection():
             raise NoInternetConnection
 
-        self._proxy_validator = self.__new_validator()
+        if not self._proxy_filterer:
+            self._proxy_filterer = ProxyFilterer()
+
+        if not self._proxy_validator:
+            self._proxy_validator = self.__new_validator()
 
     def __setattr__(self, __name: str, __value: Any) -> None:
         if __name == 'debug':
@@ -56,7 +61,7 @@ class ProxyFetcher:
         """Iterates through all the providers, gather proxies and returns them.
         """
         logger.debug('Gathering all proxies from providers')
-        with ThreadPoolExecutor(max_workers=len(self._proxy_providers)) as executor:
+        with ThreadPoolExecutor(max_workers=max(len(self._proxy_providers), 1)) as executor:
             proxies_generator = executor.map(
                 lambda provider: provider.gather(),
                 self._proxy_providers
@@ -107,7 +112,7 @@ class ProxyFetcher:
             protocols=protocols,
             anonymities=anonymities,
             limit=1
-        )
+        )[0]
 
     def get(self, protocols: List[Protocols] = [], anonymities: List[Anonymities] = [], limit: int = 0) -> List[Proxy]:
         """Get multiple proxies.

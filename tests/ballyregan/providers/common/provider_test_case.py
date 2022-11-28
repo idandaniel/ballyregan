@@ -46,5 +46,4 @@ class ProviderTestCase:
         )
 
         gather_response = provider.gather()
-        print(gather_response)
         assert gather_response == self.test_data.expected_proxies

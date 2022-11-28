@@ -31,6 +31,5 @@ class TestValidator:
     ])
     @pytest.mark.asyncio
     async def test_is_proxy_valid_with_invalid_proxies(self, validator: ProxyValidator, proxy: Proxy):
-        # TODO: mock valid proxy
         is_proxy_valid = await validator.is_proxy_valid(proxy)
         assert is_proxy_valid == False

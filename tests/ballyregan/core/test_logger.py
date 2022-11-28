@@ -5,8 +5,9 @@ from io import StringIO
 import pytest
 from loguru import logger
 
+import ballyregan.core.exceptions
 from src.ballyregan.core.logger import set_logger_level, init_logger
-from src.ballyregan.core.exceptions import InvalidDebugMode
+from src.ballyregan.core.exceptions import InvalidDebugMode, NoProxiesFound
 
 
 class CaptureLoguru:
@@ -52,7 +53,7 @@ class TestLogger:
         assert info_regex.match(
             caplog.out) is not None and not debug_regex.match(caplog.out)
 
-    def test_logger_level_debug(self):
+    def test_set_logger_level_debug(self):
         set_logger_level("DEBUG")
 
         message = "This is a debug message"
@@ -63,11 +64,11 @@ class TestLogger:
         assert regex.match(caplog.out) is not None
 
     def test_init_logger(self):
-        with pytest.raises(Exception, match="Invalid debug mode.*") as e:
+        with pytest.raises(ballyregan.core.exceptions.InvalidDebugMode):
             init_logger(debug="Unknown Option")
 
         init_logger(debug=False)
-        self.test_logger_level_debug()
+        self.test_set_logger_level_debug()
 
         init_logger(debug=True)
         self.test_set_logger_level_info()

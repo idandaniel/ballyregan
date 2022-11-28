@@ -1,7 +1,7 @@
 import asyncio
 
 from src.ballyregan.core.utils import get_event_loop, has_internet_connection
-from tests.ballyregan.disable_socket import run_offline
+from tests.ballyregan.disable_socket import disable_socket
 
 
 def test_get_event_loop():
@@ -10,7 +10,7 @@ def test_get_event_loop():
 
 class TestInternetConnection():
 
-    @run_offline
+    @disable_socket
     def test_offline(self):
         assert has_internet_connection() == False
 
