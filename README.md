@@ -120,7 +120,7 @@ ballyregan get -o json
 
 #### Get proxies by limit
 ```sh
-bellyregan get -l 4
+ballyregan get -l 4
 ```
 
 #### Get proxies by filters
