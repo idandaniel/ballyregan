@@ -7,7 +7,7 @@ from requests import Session
 from loguru import logger
 
 from ballyregan import Proxy
-from ballyregan.core.exceptions import ProxyGatherException
+from ballyregan.core.exceptions import ProxyGatherException, ProxyParseException
 
 
 @dataclass
@@ -53,7 +53,7 @@ class IProxyProvider(ABC):
         try:
             raw_proxies = self._get_raw_proxies()
             return list(map(self.raw_proxy_to_object, raw_proxies))                
-        except ProxyGatherException:
+        except (ProxyGatherException, ProxyParseException):
             logger.warning(
                 f'Failed to gather proxies from {self.__class__.__name__}, skipping.'
             )

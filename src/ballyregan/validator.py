@@ -73,9 +73,6 @@ class ProxyValidator:
         async def put_proxy_in_queue_if_valid(proxy: Proxy):
             nonlocal valid_proxies_queue
 
-            if valid_proxies_queue.qsize() >= limit and limit != 0:
-                raise Full
-
             is_proxy_valid = await self.is_proxy_valid(proxy)
             if not is_proxy_valid:
                 return
