@@ -45,8 +45,9 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
         
-      - run: mkdir coverage
+      - run: poetry install --no-interaction
       
+      - run: mkdir coverage
       - name: Test
         run: "poetry run coverage -m pytest"
         
