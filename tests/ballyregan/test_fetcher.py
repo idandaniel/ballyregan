@@ -44,7 +44,7 @@ def test_new_fetcher_with_loop():
     assert fetcher.loop == loop
 
 
-class TestGet:
+class TestFetcherGet:
 
     @dataclass
     class FakeProvider(IProxyProvider):
@@ -83,17 +83,13 @@ class TestGet:
         for proxy in proxies:
             assert isinstance(proxy, Proxy)
 
+
     @pytest.mark.parametrize('fetcher', [ProxyFetcher(_proxy_providers=[FakeProvider()], _proxy_validator=FakeValidator())])
-    def test_get_ine_with_providers(self, fetcher: ProxyFetcher):
-        proxy = fetcher.get_one()
-        assert isinstance(proxy, Proxy)
+    def test_get_one_with_providers(self, fetcher: ProxyFetcher):
+        proxies = fetcher.get_one()
+        assert len(proxies) == 1
+        assert isinstance(proxies[0], Proxy)
 
-
-    # @pytest.mark.parametrize('fetcher', [ProxyFetcher(_proxy_providers=[FakeProvider()])])
-    # def test_gather_from_providers(self, fetcher: ProxyFetcher):
-    #     proxies = fetcher._get_all_proxies_from_providers()
-    #     assert len(proxies) > 0
-    
 
     
 

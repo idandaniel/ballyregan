@@ -48,6 +48,7 @@ requests-mock = "^1.10.0"
 coverage = "^6.5.0"
 pytest-socket = "^0.5.1"
 pytest-asyncio = "^0.20.2"
+aioresponses = "^0.7.3"
 
 [tool.poetry.scripts]
 ballyregan = "cli.app:run"

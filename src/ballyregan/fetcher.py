@@ -19,8 +19,6 @@ from ballyregan.providers import IProxyProvider, FreeProxyListProvider, GeonodeP
 
 @dataclass
 class ProxyFetcher:
-    _proxy_validator: ProxyValidator = None
-    _proxy_filterer: ProxyFilterer = None
     _proxy_providers: List[IProxyProvider] = field(
         default_factory=lambda: [
             SSLProxiesProvider(),
@@ -31,6 +29,8 @@ class ProxyFetcher:
             SocksProxyProvider(),
         ]
     )
+    _proxy_validator: ProxyValidator = None
+    _proxy_filterer: ProxyFilterer = None
     loop: AbstractEventLoop = None
     debug: bool = False
 
@@ -112,7 +112,7 @@ class ProxyFetcher:
             protocols=protocols,
             anonymities=anonymities,
             limit=1
-        )[0]
+        )
 
     def get(self, protocols: List[Protocols] = [], anonymities: List[Anonymities] = [], limit: int = 0) -> List[Proxy]:
         """Get multiple proxies.

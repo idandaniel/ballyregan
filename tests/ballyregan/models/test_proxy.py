@@ -4,15 +4,11 @@ from src.ballyregan import Proxy
 from src.ballyregan.models import Anonymities, Protocols
 
 
-IP = '1.1.1.1'
-PORT = 8080
-
-
 @pytest.mark.parametrize('proxy', [
     Proxy(
         protocol=Protocols.HTTPS,
-        ip=IP,
-        port=PORT,
+        ip='1.1.1.1',
+        port=8080,
         anonymity=Anonymities.ELITE
     )
 ])
