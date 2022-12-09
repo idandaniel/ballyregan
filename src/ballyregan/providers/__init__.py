@@ -6,3 +6,4 @@ from .us_proxy import USProxyProvider
 from .proxy_list_download import ProxyListDownloadProvider
 from .socks_proxy import SocksProxyProvider
 from .hidemy_name import HidemynameProvider
+from .proxyscrape import ProxyscrapeProvider
