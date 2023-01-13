@@ -1,7 +1,5 @@
 import asyncio
-
-from pythonping import ping
-
+import requests
 
 def has_internet_connection() -> bool:
     """Check wether or not the system is connected to a network
@@ -10,7 +8,7 @@ def has_internet_connection() -> bool:
         bool: Connected or not
     """
     try:
-        ping('google.com', verbose=False, timeout=2, count=2)
+        requests.get('https://www.google.com')
     except:
         return False
     else:
