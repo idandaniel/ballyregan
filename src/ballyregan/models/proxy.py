@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import List, Optional, Union
 
-from ballyregan.models import HashableBaseModel
+from ..models import HashableBaseModel
 
 UNKNOWN = 'unknown'
 

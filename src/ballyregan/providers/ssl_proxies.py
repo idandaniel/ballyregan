@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from ballyregan.providers import FreeProxyListProvider
+from ..providers import FreeProxyListProvider
 
 
 @dataclass

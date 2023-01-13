@@ -1,8 +1,8 @@
 from dataclasses import dataclass
 
-from ballyregan import Proxy
-from ballyregan.providers import FreeProxyListProvider
-from ballyregan.core.exceptions import ProxyParseException
+from .. import Proxy
+from ..providers import FreeProxyListProvider
+from ..core.exceptions import ProxyParseException
 
 
 @dataclass

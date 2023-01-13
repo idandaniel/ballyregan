@@ -7,14 +7,14 @@ from concurrent.futures import ThreadPoolExecutor
 
 from loguru import logger
 
-from ballyregan import Proxy
-from ballyregan.models import Protocols, Anonymities
-from ballyregan.core.exceptions import NoProxiesFound, NoInternetConnection
-from ballyregan.core.logger import init_logger
-from ballyregan.core.utils import has_internet_connection, get_event_loop
-from ballyregan.validator import ProxyValidator
-from ballyregan.filterer import ProxyFilterer
-from ballyregan.providers import IProxyProvider, FreeProxyListProvider, GeonodeProvider, SSLProxiesProvider, USProxyProvider, ProxyListDownloadProvider, SocksProxyProvider
+from . import Proxy
+from .models import Protocols, Anonymities
+from .core.exceptions import NoProxiesFound, NoInternetConnection
+from .core.logger import init_logger
+from .core.utils import has_internet_connection, get_event_loop
+from .validator import ProxyValidator
+from .filterer import ProxyFilterer
+from .providers import IProxyProvider, FreeProxyListProvider, GeonodeProvider, SSLProxiesProvider, USProxyProvider, ProxyListDownloadProvider, SocksProxyProvider
 
 
 @dataclass

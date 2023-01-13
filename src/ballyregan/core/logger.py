@@ -1,7 +1,7 @@
 import sys
 from loguru import logger
 
-from ballyregan.core.exceptions import InvalidDebugMode
+from ..core.exceptions import InvalidDebugMode
 
 
 def set_logger_level(log_level: str):

@@ -6,8 +6,8 @@ from faker import Faker
 from requests import Session
 from loguru import logger
 
-from ballyregan import Proxy
-from ballyregan.core.exceptions import ProxyGatherException, ProxyParseException
+from .. import Proxy
+from ..core.exceptions import ProxyGatherException, ProxyParseException
 
 
 @dataclass

@@ -3,9 +3,9 @@ from dataclasses import dataclass
 
 from requests.exceptions import ConnectionError, JSONDecodeError
 
-from ballyregan import Proxy
-from ballyregan.providers import IProxyProvider
-from ballyregan.core.exceptions import ProxyGatherException
+from .. import Proxy
+from ..providers import IProxyProvider
+from ..core.exceptions import ProxyGatherException
 
 
 @dataclass

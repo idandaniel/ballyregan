@@ -12,9 +12,9 @@ from loguru import logger
 import urllib3
 from urllib3.connectionpool import InsecureRequestWarning
 
-from ballyregan import Proxy
-from ballyregan.models import Protocols
-from ballyregan.core.utils import get_event_loop
+from . import Proxy
+from .models import Protocols
+from .core.utils import get_event_loop
 
 
 @dataclass

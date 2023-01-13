@@ -4,10 +4,10 @@ from dataclasses import dataclass
 import pandas
 from requests.exceptions import ConnectionError
 
-from ballyregan import Proxy
-from ballyregan.models import Protocols
-from ballyregan.providers import IProxyProvider
-from ballyregan.core.exceptions import ProxyGatherException, ProxyParseException
+from .. import Proxy
+from ..models import Protocols
+from ..providers import IProxyProvider
+from ..core.exceptions import ProxyGatherException, ProxyParseException
 
 
 @dataclass

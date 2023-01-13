@@ -2,8 +2,8 @@ from typing import List
 
 from loguru import logger
 
-from ballyregan import Proxy
-from ballyregan.models import Protocols, Anonymities
+from . import Proxy
+from .models import Protocols, Anonymities
 
 
 class ProxyFilterer:
