@@ -1,6 +1,6 @@
 import asyncio
 
-from pythonping import ping
+import socket
 
 
 def has_internet_connection() -> bool:
@@ -10,11 +10,11 @@ def has_internet_connection() -> bool:
         bool: Connected or not
     """
     try:
-        ping('google.com', verbose=False, timeout=2, count=2)
+        s = socket.create_connection(("8.8.8.8", 53), timeout=2)
+        s.close()
+        return True
     except:
         return False
-    else:
-        return True
 
 
 def get_event_loop():
