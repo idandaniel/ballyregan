@@ -112,7 +112,7 @@ class ProxyFetcher:
             protocols=protocols,
             anonymities=anonymities,
             limit=1
-        )
+        )[0]
 
     def get(self, protocols: List[Protocols] = [], anonymities: List[Anonymities] = [], limit: int = 0) -> List[Proxy]:
         """Get multiple proxies.
