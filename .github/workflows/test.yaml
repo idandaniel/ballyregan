@@ -4,6 +4,8 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize]
+    paths:
+      - 'src/**'
   push:
     branches: [main]
 
