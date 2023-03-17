@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ballyregan"
-version = "1.0.2"
+version = "1.0.3"
 description = "Find fetch & validate free proxies fast."
 authors = ["idandaniel <idandaniel12@gmail.com>"]
 license = "Apache License, Version 2.0"
