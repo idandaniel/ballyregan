@@ -86,9 +86,8 @@ class TestFetcherGet:
 
     @pytest.mark.parametrize('fetcher', [ProxyFetcher(_proxy_providers=[FakeProvider()], _proxy_validator=FakeValidator())])
     def test_get_one_with_providers(self, fetcher: ProxyFetcher):
-        proxies = fetcher.get_one()
-        assert len(proxies) == 1
-        assert isinstance(proxies[0], Proxy)
+        proxy = fetcher.get_one()
+        assert isinstance(proxy, Proxy)
 
 
     
