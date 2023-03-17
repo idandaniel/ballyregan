@@ -1,4 +1,4 @@
-<h1>Ballyregan 🔷</h1>
+<h1>🔷 Ballyregan</h1>
 <p><em>Find fetch & validate free proxies fast.</em></p>
 
 <p>
@@ -62,7 +62,7 @@ pip install ballyregan
 
 ## Usage
 
-### Package 📦
+### 📦 Package
 
 #### Create a fetcher instance
 ```python
@@ -96,7 +96,7 @@ proxies = fetcher.get(
 print(proxies)
 ```
 
-### CLI 💻
+### 💻 CLI
 
 #### Get all proxies
 ```sh
@@ -130,15 +130,11 @@ ballyregan get -l 4 -p https -p socks5 -a elite
 
 ---
 
-## Author
+## 👤 Author
 
-👤 **Idan Daniel**
+**Idan Daniel**
 
 * Github: [@idandaniel](https://github.com/idandaniel)
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
