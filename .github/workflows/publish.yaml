@@ -31,8 +31,5 @@ jobs:
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
-          latest_tag=$(git describe --tags --abbrev=0)
-          sed -i "s/version = \"[0-9.]*\"/version = \"$latest_tag\"/g" pyproject.toml
           poetry config pypi-token.pypi $PYPI_TOKEN
-          poetry version $latest_tag
           poetry publish --build
