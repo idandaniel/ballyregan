@@ -1,6 +1,6 @@
 from __future__ import annotations
 from itertools import chain
-from typing import Any, List, Optional
+from typing import Any, List
 from asyncio import AbstractEventLoop
 from dataclasses import dataclass, field
 from concurrent.futures import ThreadPoolExecutor
@@ -14,7 +14,15 @@ from ballyregan.core.logger import init_logger
 from ballyregan.core.utils import has_internet_connection, get_event_loop
 from ballyregan.validator import ProxyValidator
 from ballyregan.filterer import ProxyFilterer
-from ballyregan.providers import IProxyProvider, FreeProxyListProvider, GeonodeProvider, SSLProxiesProvider, USProxyProvider, ProxyListDownloadProvider, SocksProxyProvider
+from ballyregan.providers import (
+    IProxyProvider,
+    FreeProxyListProvider,
+    GeonodeProvider,
+    SSLProxiesProvider,
+    USProxyProvider,
+    ProxyListDownloadProvider,
+    SocksProxyProvider
+)
 
 
 @dataclass
@@ -51,10 +59,9 @@ class ProxyFetcher:
         super().__setattr__(__name, __value)
 
     def __new_validator(self) -> ProxyValidator:
-        if self.loop:
-            return ProxyValidator(loop=self.loop)
+        if not self.loop:
+            self.loop = get_event_loop()
 
-        self.loop = get_event_loop()
         return ProxyValidator(loop=self.loop)
 
     def _get_all_proxies_from_providers(self) -> None:
@@ -79,7 +86,6 @@ class ProxyFetcher:
             protocols (List[str], optional): The allowed protocols of proxy
         """
         logger.debug(f'Proxies gather started.')
-
         proxies = self._get_all_proxies_from_providers()
         filtered_proxies = self._proxy_filterer.filter(
             proxies,

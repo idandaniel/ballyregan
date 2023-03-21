@@ -1,7 +1,6 @@
+import time
 from typing import List
 from dataclasses import dataclass
-
-from requests.exceptions import ConnectionError
 
 from ballyregan import Proxy
 from ballyregan.models import Protocols
@@ -19,7 +18,9 @@ class ProxyListDownloadProvider(IProxyProvider):
 
         for protocol in Protocols.values():
             try:
-                response = self._session.get(f'{self.url}', params={'type': protocol})
+                response = self._session.get(self.url, params={'type': protocol})
+                if response.status_code == 429:
+                    continue
                 if not response.ok:
                     raise ProxyGatherException
             except Exception:
