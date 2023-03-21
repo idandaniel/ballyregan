@@ -1,5 +1,7 @@
-<h1>🔷 Ballyregan</h1>
-<p><em>Find fetch & validate free proxies fast.</em></p>
+<!-- <h1>🔷 Ballyregan</h1> -->
+<div align="center">
+<img src="https://user-images.githubusercontent.com/71208042/226755154-ed482978-89a3-4d2b-8a49-78f6ca07c290.png" alt="Ballyregan" width=550/>
+<h3><em>Find fetch & validate free proxies fast.</em></h3>
 
 <p>
   <a href="https://pypi.org/project/ballyregan" target="_blank">
@@ -12,25 +14,28 @@
       <img src="https://img.shields.io/badge/license-Apache%202.0-yellow" alt="License: Apache 2.0">
   </a>
 </p>
+</div>
 
 ---
 
+Ballyregan is a super fast proxy fetcher, some will say the fastest out there.
 <br>
+It provides a python package and an easy to use CLI that fetches <b>Free Tested Proxies</b>
+<br>
+So don't be shy, Go ahead, have some fun.
 
-Ballyregan is a package & CLI that allows you to fetch free tested proxies really fast!
+---
 
 Key features:
-  * **Fetch** free tested proxies super fast with [ProxyFetcher](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/fetcher.py)
-  * **Validate** your own proxies with [ProxyValidator](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/validator.py)
-  * **Filter** custom proxy list by protocol & anonymity with [ProxyFilterer](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/filterer.py)
-
-<br>
+  * **Fetch** free tested proxies super fast using the [ProxyFetcher](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/fetcher.py)
+  * **Validate** your own proxies using the [ProxyValidator](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/validator.py)
+  * **Filter** custom proxy list by protocol & anonymity using the [ProxyFilterer](https://github.com/idandaniel/ballyregan/blob/main/src/ballyregan/filterer.py)
 
 ---
 
 ## How does it work?
 When you use the ProxyFetcher to fetch a proxy, it performs several steps:
-1. Gather all the available proxies from a list of built in providers (each provider gathers it's own and returns it to the fetcher).
+1. Gather all the available proxies from a list of built-in providers (each provider gathers its own and returns it to the fetcher).
 
   - > Provider - any website that serves free proxy lists (e.g https://free-proxy-list.net).
 
@@ -55,6 +60,7 @@ By using the power of async http requests, ballyregan is able to validate thousa
 ---
 
 ## Install
+All you need to do is install the package from pypi, and it will automatically install the CLI for you.
 
 ```sh
 pip install ballyregan
@@ -98,14 +104,19 @@ print(proxies)
 
 ### 💻 CLI
 
-#### Get all proxies
+#### Need some help?
 ```sh
-ballyregan get --all
+ballyregan get --help
 ```
 
 #### Get one proxy
 ```sh
 ballyregan get
+```
+
+#### Get all proxies
+```sh
+ballyregan get --all
 ```
 
 #### Use debug mode
@@ -129,12 +140,6 @@ ballyregan get -l 4 -p https -p socks5 -a elite
 ```
 
 ---
-
-## 👤 Author
-
-**Idan Daniel**
-
-* Github: [@idandaniel](https://github.com/idandaniel)
 
 ## 📝 License
 
