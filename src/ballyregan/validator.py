@@ -23,7 +23,7 @@ class ProxyValidator:
     urllib3.disable_warnings(InsecureRequestWarning)
 
     loop: AbstractEventLoop = None
-    _judge_domain: str = 'httpheader.net/azenv.php'
+    _judge_domain: str = 'google.com'
     _default_timeout: ClientTimeout = ClientTimeout(total=30)
 
     def __post_init__(self) -> None:
@@ -40,7 +40,7 @@ class ProxyValidator:
         ) as session:
             try:
                 async with session.get(f"{judge_protocol}://{self._judge_domain}", ssl=False) as response:
-                    return response.ok
+                    return response.ok and response.status == 200
             except:
                 return False
 
@@ -84,7 +84,7 @@ class ProxyValidator:
             for proxy in proxies
         ]
 
-    def filter_valid_proxies(self, proxies: List[Proxy], limit: int = 0) -> List[Proxy]:
+    async def _async_filter_valid_proxies(self, proxies: List[Proxy], limit: int = 0) -> List[Proxy]:
         """Gets a list of proxies, filters them and returns only the valid ones.
 
         Args:
@@ -104,12 +104,28 @@ class ProxyValidator:
             proxies=proxies,
             limit=limit
         )
-        futures = asyncio.gather(*coroutines)
         try:
-            self.loop.run_until_complete(futures)
+            await asyncio.gather(*coroutines)
         except Full:
             pass
 
         logger.debug('Finished filtering valid proxies')
 
         return list(valid_proxies.queue)
+    
+    def filter_valid_proxies(self, proxies: List[Proxy], limit: int = 0) -> List[Proxy]:
+        """Gets a list of proxies, filters them and returns only the valid ones.
+        wrapper for the async one
+
+        Args:
+            proxies (List[Proxy]): Proxy list to filter
+            limit (int, optional): The amount of valid proxies to get.
+            When 0 the validator will validate all the proxies in the list. Defaults to 0.
+
+        Returns:
+            List[Proxy]: The filter list contains only valid proxies
+        """
+        
+        return self.loop.run_until_complete(
+            self._async_filter_valid_proxies(proxies, limit)
+        )

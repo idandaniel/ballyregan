@@ -1,9 +1,9 @@
 from typing import List
 
 import typer
+
 from cli.core.config import OutputFormats
 from cli.core.utils import print_proxies
-
 from ballyregan import ProxyFetcher
 from ballyregan.core.exceptions import ProxyException
 from ballyregan.models import Protocols, Anonymities
@@ -61,7 +61,7 @@ def get(
 
 @app.callback()
 def callback(
-        debug: bool = typer.Option(False, '--debug')
+    debug: bool = typer.Option(False, '--debug')
 ):
     fetcher.debug = debug
 
