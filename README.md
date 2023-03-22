@@ -1,4 +1,3 @@
-<!-- <h1>🔷 Ballyregan</h1> -->
 <div align="center">
 <img src="https://user-images.githubusercontent.com/71208042/226755154-ed482978-89a3-4d2b-8a49-78f6ca07c290.png" alt="Ballyregan" width=550/>
 <h3><em>Find fetch & validate free proxies fast.</em></h3>
