@@ -18,11 +18,10 @@
 
 ---
 
-Ballyregan is a super fast proxy fetcher, some will say the fastest out there.
+Ballyregan is a super fast proxy fetcher.
 <br>
-It provides a python package and an easy-to-use CLI that fetches <b>Free Tested Proxies</b>
+It provides a python package and an easy-to-use CLI to help you fetch <bFree Tested Proxies</b> fast, and keep your privacy.
 <br>
-So don't be shy, Go ahead, and have some fun.
 
 ---
 
