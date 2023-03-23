@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.9"]
-        poetry-version: ["1.1.13"]
+        poetry-version: ["1.4.1"]
       fail-fast: false
 
     steps:
