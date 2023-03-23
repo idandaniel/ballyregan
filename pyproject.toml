@@ -21,7 +21,10 @@ keywords = [
     "proxy-checker",
     "python-proxy",
     "proxy-fetcher",
-    "get-proxy"
+    "free-proxy",
+    "get-proxy",
+    "proxy-finder",
+    "find-proxy"
 ]
 
 [tool.poetry.dependencies]
@@ -40,6 +43,7 @@ aiohttp-proxy = "^0.1.2"
 html5lib = "^1.1"
 requests = "^2.28.1"
 bs4 = "^0.0.1"
+strenum = "^0.4.10"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.2.0"

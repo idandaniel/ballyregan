@@ -1,11 +1,11 @@
-from enum import Enum
+from strenum import StrEnum
 from typing import List, Optional, Union
 
 from ballyregan.models import HashableBaseModel
 
 UNKNOWN = 'unknown'
 
-class Anonymities(str, Enum):
+class Anonymities(StrEnum):
     ELITE: str = 'elite'
     TRANSPARENT: str = 'transparent'
     ANONYMOUS: str = 'anonymous'
@@ -16,7 +16,7 @@ class Anonymities(str, Enum):
         return [anonymity.value for anonymity in Anonymities]
 
     
-class Protocols(str, Enum):
+class Protocols(StrEnum):
     HTTP: str = 'http'
     HTTPS: str = 'https'
     SOCKS4: str = 'socks4'
@@ -61,7 +61,7 @@ class Proxy(HashableBaseModel):
 
         # Iterate though attributes and convert enums to their values (strings)
         for attribute_key, attribute in attributes.items():
-            if isinstance(attribute, Enum):
+            if isinstance(attribute, StrEnum):
                 attributes.update({attribute_key: attribute.value})
 
         return attributes
