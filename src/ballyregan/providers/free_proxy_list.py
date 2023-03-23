@@ -3,6 +3,7 @@ from dataclasses import dataclass
 
 import pandas
 from requests.exceptions import ConnectionError
+from aiohttp import ClientSession
 
 from ballyregan import Proxy
 from ballyregan.models import Protocols
@@ -15,15 +16,15 @@ class FreeProxyListProvider(IProxyProvider):
 
     url: str = 'https://free-proxy-list.net/'
 
-    def _get_raw_proxies(self) -> List[dict]:
+    async def _get_raw_proxies(self) -> List[dict]:
         try:
-            proxies_response = self._session.get(self.url)
-
-            if not proxies_response.ok:
-                raise ProxyGatherException
-                
-            proxies_table = pandas.read_html(proxies_response.text)[0]
-
+            async with ClientSession(headers=self._session_headers) as session:
+                async with session.get(self.url) as proxies_response:
+                    if not proxies_response.ok:
+                        raise ProxyGatherException
+                    
+                    response_text = await proxies_response.text()
+                    proxies_table = pandas.read_html(response_text)[0]
         except (IndexError, ValueError, ConnectionError):
             raise ProxyGatherException
         else:

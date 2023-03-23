@@ -2,6 +2,7 @@ from typing import List
 from dataclasses import dataclass
 
 from requests.exceptions import ConnectionError, JSONDecodeError
+from aiohttp import ClientSession
 
 from ballyregan import Proxy
 from ballyregan.providers import IProxyProvider
@@ -12,23 +13,25 @@ from ballyregan.core.exceptions import ProxyGatherException
 class GeonodeProvider(IProxyProvider):
     url: str = "https://proxylist.geonode.com/api/proxy-list"
 
-    def _get_raw_proxies(self, amount: int = 500) -> List[dict]:
+    async def _get_raw_proxies(self, amount: int = 500) -> List[dict]:
         try:
-            proxies_response = self._session.get(
-                url=self.url,
-                params={
-                    'page': 1,
-                    'limit': amount,
-                    'sort_by': 'lastChecked',
-                    'sort_type': 'desc',
-                    'filterUpTime': 60
-                }
-            )
+            async with ClientSession(headers=self._session_headers) as session:
+                async with session.get(
+                    self.url,
+                    params={
+                        'page': 1,
+                        'limit': amount,
+                        'sort_by': 'lastChecked',
+                        'sort_type': 'desc',
+                        'filterUpTime': 80
+                    }
+                ) as proxies_response:
 
-            if not proxies_response.ok:
-                raise ProxyGatherException
+                    if not proxies_response.ok:
+                        raise ProxyGatherException
 
-            proxies_data = proxies_response.json()['data']
+                    response_data = await proxies_response.json()
+                    proxies_data = response_data['data']
 
         except (ConnectionError, KeyError, JSONDecodeError):
             raise ProxyGatherException

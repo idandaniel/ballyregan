@@ -1,7 +1,6 @@
-from ballyregan.providers.free_proxy_list import FreeProxyListProvider
-
-
 from dataclasses import dataclass
+
+from ballyregan.providers.free_proxy_list import FreeProxyListProvider
 
 
 @dataclass

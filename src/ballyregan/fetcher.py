@@ -1,6 +1,7 @@
 from __future__ import annotations
 from itertools import chain
 from typing import Any, List
+import asyncio
 from asyncio import AbstractEventLoop
 from dataclasses import dataclass, field
 from concurrent.futures import ThreadPoolExecutor
@@ -50,7 +51,10 @@ class ProxyFetcher:
             self._proxy_filterer = ProxyFilterer()
 
         if not self._proxy_validator:
-            self._proxy_validator = self.__new_validator()
+            self._proxy_validator = ProxyValidator()
+
+        if not self.loop:
+            self.loop = get_event_loop()
 
     def __setattr__(self, __name: str, __value: Any) -> None:
         if __name == 'debug':
@@ -58,26 +62,19 @@ class ProxyFetcher:
 
         super().__setattr__(__name, __value)
 
-    def __new_validator(self) -> ProxyValidator:
-        if not self.loop:
-            self.loop = get_event_loop()
-
-        return ProxyValidator(loop=self.loop)
-
-    def _get_all_proxies_from_providers(self) -> None:
+    async def _get_all_proxies_from_providers(self) -> None:
         """Iterates through all the providers, gather proxies and returns them.
         """
         logger.debug('Gathering all proxies from providers')
-        with ThreadPoolExecutor(max_workers=max(len(self._proxy_providers), 1)) as executor:
-            proxies_generator = executor.map(
-                lambda provider: provider.gather(),
-                self._proxy_providers
-            )
+        gather_coroutines = [
+            provider.gather() for provider in self._proxy_providers
+        ]
+        proxies = await asyncio.gather(*gather_coroutines)
         logger.debug('Finished gathering all proxies from providers')
 
-        return list(set(chain.from_iterable(proxies_generator)))
+        return list(set(chain.from_iterable(proxies)))
 
-    def _gather(self, protocols: List[Protocols] = [], anonymities: List[Anonymities] = [], limit: int = 0) -> None:
+    async def _gather(self, protocols: List[Protocols] = [], anonymities: List[Anonymities] = [], limit: int = 0) -> None:
         """Gathers proxies from providers, validates them and stores them in the proxies queue.
 
         Args:
@@ -86,13 +83,13 @@ class ProxyFetcher:
             protocols (List[str], optional): The allowed protocols of proxy
         """
         logger.debug(f'Proxies gather started.')
-        proxies = self._get_all_proxies_from_providers()
+        proxies = await self._get_all_proxies_from_providers()
         filtered_proxies = self._proxy_filterer.filter(
             proxies,
             protocols=protocols,
             anonymities=anonymities,
         )
-        valid_proxies = self._proxy_validator.filter_valid_proxies(
+        valid_proxies = await self._proxy_validator.filter_valid_proxies(
             proxies=filtered_proxies,
             limit=limit,
         )
@@ -105,6 +102,15 @@ class ProxyFetcher:
 
         return valid_proxies
 
+    def _gather_sync(self, protocols: List[Protocols] = [], anonymities: List[Anonymities] = [], limit: int = 0) -> List[Proxy]:
+        return self.loop.run_until_complete(
+            self._gather(
+                protocols=protocols,
+                anonymities=anonymities,
+                limit=limit
+            )
+        )
+    
     def get_one(self, protocols: List[Protocols] = [], anonymities: List[Anonymities] = []) -> Proxy:
         """Get one proxy
 
@@ -114,7 +120,7 @@ class ProxyFetcher:
         Returns:
             Proxy: Proxy
         """
-        return self._gather(
+        return self._gather_sync(
             protocols=protocols,
             anonymities=anonymities,
             limit=1
@@ -131,7 +137,7 @@ class ProxyFetcher:
         Returns:
             List[Proxy]: List of proxies
         """
-        proxies = self._gather(
+        proxies = self._gather_sync(
             protocols=protocols,
             anonymities=anonymities,
             limit=limit

@@ -5,6 +5,7 @@ from abc import ABC, abstractmethod, abstractstaticmethod
 from faker import Faker
 from requests import Session
 from loguru import logger
+from aiohttp import ClientSession
 
 from ballyregan import Proxy
 from ballyregan.core.exceptions import ProxyGatherException, ProxyParseException
@@ -15,15 +16,15 @@ class IProxyProvider(ABC):
     """An interface for provider class. Provider is source which provides us the proxy, for example freeproxieslists.net
     """
     url: str
-    _session: Session = field(init=False)
+    _session: ClientSession = field(init=False)
 
     def __post_init__(self) -> None:
-        self._session = Session()
+        # self._session = Session()
         # uses fake user agent to prevent providers from blocking you.
-        self._session.headers = {'User-agent': Faker().user_agent()}
+        self._session_headers = {'User-agent': Faker().user_agent()}
 
     @abstractmethod
-    def _get_raw_proxies(self) -> List[Any]:
+    async def _get_raw_proxies(self) -> List[Any]:
         """The provider's way to retrieve the proxies as is from the source.
 
         Returns:
@@ -43,7 +44,7 @@ class IProxyProvider(ABC):
         """
         pass
 
-    def gather(self) -> List[Proxy]:
+    async def gather(self) -> List[Proxy]:
         """The function that returns all the gathered proxies from the source.
 
         Returns:
@@ -51,7 +52,7 @@ class IProxyProvider(ABC):
         """
         logger.debug(f'Gathering proxies from {self.__class__.__name__}')
         try:
-            raw_proxies = self._get_raw_proxies()
+            raw_proxies = await self._get_raw_proxies()
             return list(map(self.raw_proxy_to_object, raw_proxies))                
         except (ProxyGatherException, ProxyParseException):
             logger.warning(
