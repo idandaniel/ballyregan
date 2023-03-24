@@ -19,7 +19,7 @@
 
 Ballyregan is a super fast proxy fetcher.
 <br>
-It provides a python package and an easy-to-use CLI to help you fetch <bFree Tested Proxies</b> fast, and keep your privacy.
+It provides a python package and an easy-to-use CLI to help you fetch <b>Free Tested Proxies</b> fast, and keep your privacy.
 <br>
 
 ---
