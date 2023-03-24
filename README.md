@@ -111,8 +111,6 @@ ballyregan get -l 4
 ballyregan get -l 4 -p https -p socks5 -a elite
 ```
 
-<br>
-
 ---
 
 ## How does it work?
