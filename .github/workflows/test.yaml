@@ -58,7 +58,9 @@ jobs:
       
       - name: Run tests
         run: |
-          poetry run python -m coverage run -m pytest > coverage/.coverage.${{ runner.os }}-py${{ matrix.python-version }}
+          poetry run python -m coverage run -m pytest 
+            --data-file coverage/.coverage.${{ runner.os }}-py${{ matrix.python-version }}
+            --context ${{ runner.os }}-py${{ matrix.python-version }}
           
       - name: Store coverage files
         uses: actions/upload-artifact@v3
