@@ -1,4 +1,4 @@
-name: Tests
+name: Test
 
 on:
   pull_request:
@@ -53,7 +53,48 @@ jobs:
       - name: Install dependencies
         run: |
           python -m poetry install
-
+      
+      - run: mkdir coverage
+      
       - name: Run tests
+        env:
+          COVERAGE_FILE: coverage/.coverage.${{ runner.os }}-py${{ matrix.python-version }}
+          CONTEXT: ${{ runner.os }}-py${{ matrix.python-version }}
         run: |
-          python -m poetry run python -m pytest
+          poetry run python -m coverage run -m pytest
+          
+      - name: Store coverage files
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: coverage
+          
+  coverage-combine:
+    needs: [test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      - name: Get coverage files
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage
+          path: coverage
+
+      - run: pip install coverage[toml]
+
+      - run: ls -la coverage
+      - run: coverage combine coverage
+      - run: coverage report
+      - run: coverage html --show-contexts --title "Coverage for ${{ github.sha }}"
+
+      - name: Store coverage HTML
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-html
+          path: htmlcov
