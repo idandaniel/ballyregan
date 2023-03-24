@@ -4,6 +4,8 @@ on:
   workflow_run:
     workflows: [Test]
     types: [completed]
+    
+  workflow_dispatch:
 
 permissions:
   statuses: write
