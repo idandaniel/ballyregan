@@ -12,6 +12,9 @@
   <a href="https://pypi.org/project/ballyregan" target="_blank">
       <img src="https://img.shields.io/badge/license-Apache%202.0-yellow" alt="License: Apache 2.0">
   </a>
+  <a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/idandaniel/ballyregan" target="_blank">
+    <img src="https://coverage-badge.samuelcolvin.workers.dev/idandaniel/ballyregan.svg" alt="Coverage">
+  </a>
 </p>
 </div>
 
