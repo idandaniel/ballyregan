@@ -53,7 +53,15 @@ jobs:
       - name: Install dependencies
         run: |
           python -m poetry install
-
+      
+      - run: mkdir coverage
+      
       - name: Run tests
         run: |
-          python -m poetry run python -m pytest
+          poetry run python -m coverage run -m pytest
+          
+      - name: Store coverage files
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: coverage
