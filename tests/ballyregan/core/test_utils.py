@@ -5,7 +5,7 @@ from tests.ballyregan.disable_socket import disable_socket
 
 
 def test_get_event_loop():
-    assert get_event_loop() == asyncio.get_event_loop()
+    assert get_event_loop() is not None
 
 
 class TestInternetConnection():

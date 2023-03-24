@@ -25,7 +25,7 @@ class ProviderTestCase:
     def test_gather_with_bad_status_codes(self, requests_mock):
         provider = self.test_data.provider
 
-        fail_status_codes = [400, 500]
+        fail_status_codes = [400, 401, 404, 403, 422, 429, 500]
 
         for code in fail_status_codes:
             requests_mock.get(
