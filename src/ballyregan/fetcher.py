@@ -47,6 +47,7 @@ class ProxyFetcher:
     loop: AbstractEventLoop = None
     debug: bool = False
     background_gather: bool = False
+    background_gather_interval: int = 0
 
     def __post_init__(self) -> None:
         if not has_internet_connection():
@@ -91,43 +92,37 @@ class ProxyFetcher:
             name=f"ballyregan-background-gather-thread-{uuid4()}"
         )
 
-    def _get_all_proxies_from_providers(self) -> Generator[Proxy, None, None]:
-        logger.debug('Gathering all proxies from providers')
-
-        with ThreadPoolExecutor(max_workers=max(len(self.proxy_providers), 1)) as executor:
-            proxies_generator = executor.map(
-                lambda provider: provider.gather(),
-                self.proxy_providers
-            )
-
-            logger.debug('Finished gathering all proxies from providers')
-
-            for proxies_group in proxies_generator:
-                for proxy in proxies_group:
-                    yield proxy
-
     def gather(self) -> None:
         logger.debug('Gathering all proxies from providers')
 
-        with ThreadPoolExecutor(max_workers=max(len(self.proxy_providers), 1)) as executor:
-
-            def gather_and_insert(provider: IProxyProvider) -> None:
+        def gather_and_insert(provider: IProxyProvider) -> None:
+            try:
                 proxies = provider.gather()
                 for proxy in proxies:
                     logger.debug("Inserting to backend", proxy=proxy)
                     self.backend.create_proxy(proxy)
+            except (KeyboardInterrupt, SystemExit):
+                pass
 
-            list(executor.map(gather_and_insert, self.proxy_providers))
+        providers_gather_threads = []
 
-            logger.debug('Finished gathering all proxies from providers')
+        for provider in self.proxy_providers:
+            thread = Thread(daemon=True, target=gather_and_insert, args=(provider,))
+            thread.start()
+            providers_gather_threads.append(thread)
+        
+        for thread in providers_gather_threads:
+            thread.join()
 
-    def _background_gather(self, gather_interval: int = 10) -> None:
+        logger.debug('Finished gathering all proxies from providers')
+
+    def _background_gather(self) -> None:
         try:
             while self.background_gather:
                 self.gather()
-                time.sleep(gather_interval)
+                time.sleep(self.background_gather_interval)
         except (KeyboardInterrupt, SystemExit):
-            self._background_gather_thread.join()
+            pass
 
     def get_nowait(
         self,
@@ -154,26 +149,28 @@ class ProxyFetcher:
         limit: int = 0,
         wait: bool = True
     ) -> List[Proxy]:
-        return self.get_nowait(protocols=protocols, anonymities=anonymities, limit=limit)
-        # if not limit and wait:
-        #     raise ValueError(
-        #         "Limit must be greater than zero when wait=True."
-        #     )
+        if not wait:
+            return self.get_nowait(protocols=protocols, anonymities=anonymities, limit=limit)
         
-        # while wait:
-        #     proxies = []
-        #     try:
-        #         proxies += self.get_nowait(
-        #             protocols=protocols,
-        #             anonymities=anonymities,
-        #             limit=limit
-        #         )
-        #     except NoProxiesFound:
-        #         pass
-        #     else:
-        #         if limit and len(proxies) == limit:
-        #             return proxies
-        #         limit -= len(proxies)
+        if not limit and wait:
+            raise ValueError(
+                "Limit must be greater than zero when wait=True."
+            )
+        
+        while wait:
+            proxies = []
+            try:
+                proxies += self.get_nowait(
+                    protocols=protocols,
+                    anonymities=anonymities,
+                    limit=limit
+                )
+            except NoProxiesFound:
+                pass
+            else:
+                if limit and len(proxies) == limit:
+                    return proxies
+                limit -= len(proxies)
 
 
     def get_one(

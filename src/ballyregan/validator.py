@@ -30,7 +30,7 @@ class ProxyValidator:
         if not self.loop:
             self.loop = get_event_loop()
 
-    async def _aiohttp_validation(self, proxy: Proxy) -> bool:
+    async def _aiohttp_proxy_validation(self, proxy: Proxy) -> bool:
 
         judge_protocol = Protocols.HTTPS if proxy.protocol == Protocols.HTTPS else Protocols.HTTP
 
@@ -45,18 +45,10 @@ class ProxyValidator:
                 return False
 
     async def is_proxy_valid(self, proxy: Proxy) -> bool:
-        """Wrapper function uses the validation function
-
-        Args:
-            proxy (Proxy): Proxy to validate.
-
-        Returns:
-            bool: Whether or not the proxy is valid.
-        """
         logger.debug(f'Validating proxy {proxy}')
 
         try:
-            is_proxy_valid = await self._aiohttp_validation(proxy)
+            is_proxy_valid = await self._aiohttp_proxy_validation(proxy)
         except Exception as e:
             logger.error(
                 f'Unknown exception has occured while validating proxy: {e}'
@@ -85,16 +77,6 @@ class ProxyValidator:
         ]
 
     async def _async_filter_valid_proxies(self, proxies: List[Proxy], limit: int = 0) -> List[Proxy]:
-        """Gets a list of proxies, filters them and returns only the valid ones.
-
-        Args:
-            proxies (List[Proxy]): Proxy list to filter
-            limit (int, optional): The amount of valid proxies to get.
-            When 0 the validator will validate all the proxies in the list. Defaults to 0.
-
-        Returns:
-            List[Proxy]: The filter list contains only valid proxies
-        """
         logger.debug('Filtering valid proxies')
 
         valid_proxies = Queue(maxsize=limit)
@@ -114,18 +96,6 @@ class ProxyValidator:
         return list(valid_proxies.queue)
     
     def filter_valid_proxies(self, proxies: List[Proxy], limit: int = 0) -> List[Proxy]:
-        """Gets a list of proxies, filters them and returns only the valid ones.
-        wrapper for the async one
-
-        Args:
-            proxies (List[Proxy]): Proxy list to filter
-            limit (int, optional): The amount of valid proxies to get.
-            When 0 the validator will validate all the proxies in the list. Defaults to 0.
-
-        Returns:
-            List[Proxy]: The filter list contains only valid proxies
-        """
-        
         return self.loop.run_until_complete(
             self._async_filter_valid_proxies(proxies, limit)
         )
